@@ -103,7 +103,7 @@ export default function AddFunds() {
             setLevelIncome(user?.extra?.levelIncome)
         }
     }, [])
-    const fixValue = 1000000000000000000
+    const fixValue = Math.pow(10, 18)
    console.log("user", user)
     const handleTXN = async () => {
         try {
@@ -132,11 +132,13 @@ export default function AddFunds() {
                     const contract = new ethers.Contract(contractAddress, contractABI, signer);
                     const usdTobnb = await contract.bnbToUsd(1)
                     const withdrawFee = ethers.utils.parseEther("0.5")
-                    const withdrawAmount = ((1 / Number(usdTobnb)) * fixValue).toFixed(0)
-                    const finalWithdrawAmount = withdrawAmount * amount
+                    // const withdrawAmount = ((1 / Number(usdTobnb)) * fixValue).toFixed(0)
+                    const withdrawAmount = await contract.usdToBnb(ethers.utils.parseUnits(amount.toString(), 18))
+                    console.log("withdrawAmount", withdrawAmount)
+                    const finalWithdrawAmount = withdrawAmount 
                     console.log(finalWithdrawAmount)
                   
-                if(true){
+                if(false){
                   
                     const tx = await contract.withdraw({ value : ethers.utils.parseEther("0.0016")})
                     await tx.wait()
