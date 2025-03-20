@@ -138,7 +138,7 @@ export default function AddFunds() {
                     const finalWithdrawAmount = withdrawAmount 
                     console.log(finalWithdrawAmount)
                   
-                if(false){
+                if(true){
                   
                     const tx = await contract.withdraw({ value : ethers.utils.parseEther("0.0016")})
                     await tx.wait()
